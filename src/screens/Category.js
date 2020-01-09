@@ -23,7 +23,7 @@ class CategoryList extends Component{
   }
   
   componentDidMount() {
-    axios.get(`http://192.168.1.36:5000/api/v1/categories`)
+    axios.get(`http://192.168.1.15:5000/api/v1/categories`)
       .then(res => {
         this.setState({ categories:res.data });
       })
