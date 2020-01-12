@@ -2,15 +2,21 @@ import React, { Component } from 'react';
 import { StyleSheet,View} from 'react-native';
 import{ createAppContainer } from 'react-navigation';
 import { Icon, Text} from 'native-base';
-import Home from './Home'
+import Home from './Home';
 import Category from './Category'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import {getEvenToday,getEvenUp} from '../_actions/home'
+import { connect } from 'react-redux';
 
 
 class Tabs extends Component {
   
   static navigationOptions = { 
         header: null
+  }
+
+  componentDidMount(){
+    this.props.getEvenToday()
   }
 
   render(){
@@ -55,25 +61,12 @@ const TabNavigator = createBottomTabNavigator(
     tabBarOptions: {
       style: {
         backgroundColor: 'white',
-        tabBarSelectedIconColor: '#fff',
       },
       activeTintColor: '#d10202',
       inactiveTintColor: 'gray'
     },
   }
 );
-
-class Header extends Component{
-
-  render(){
-    return(
-      <View style={styles.Header}>
-        <Text style={styles.Title}>Dumb-Tick</Text>
-      </View>
-    )
-  }
-}
-
 
 const AllPages = createAppContainer(TabNavigator)
 
@@ -95,4 +88,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Tabs;
+
+const mapStateToProps = state => ({
+  // getEvent:state.getEvent
+
+});
+
+const mapDispatchToProps = dispatch => {
+  return { 
+    getEvenToday:()=>dispatch(getEvenToday()),
+    getEvenUp:()=>dispatch(getEvenUp())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tabs)

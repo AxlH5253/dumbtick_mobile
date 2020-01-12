@@ -1,56 +1,119 @@
 import React, { Component } from 'react';
-import { StyleSheet,ScrollView,View,Image} from 'react-native';
-import { Container, Header, Content, List, ListItem, Text, Separator } from 'native-base';
-import{ createAppContainer } from 'react-navigation';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import axios from 'axios';
+import { View,ImageBackground,Picker,TouchableWithoutFeedback} from 'react-native';
+import { Card,Text,DeckSwiper} from 'native-base';
+import { connect } from 'react-redux';
+import {getEvenToday,getEvenUp} from '../_actions/home'
 
 class Category extends Component{
-
-  render(){
-    return(
-    <CategoryList/>
-    )
-  }
-}
-
-class CategoryList extends Component{
-  constructor(){
-    super();
-    this.state={
-      categories:[]
+    constructor(props){
+      super(props);
+      this.state={
+        homeIcon:true,
+        categoryIcon:false,
+        navigateIcon:false,
+        events:[],
+      }
     }
-  }
-  
-  componentDidMount() {
-    axios.get(`http://192.168.1.15:5000/api/v1/categories`)
-      .then(res => {
-        this.setState({ categories:res.data });
-      })
-  }
-  render(){
-    return(
-      <Content>
-          <Separator bordered>
-            <Text style={styles.Title}>List Of Categories</Text>
-          </Separator>
-          {this.state.categories.map((item,index)=>
-          <ListItem>
-            <Text>{item.name}</Text>
-          </ListItem>
-          )}
-        </Content>
-    )
-  }
+
+    componentDidMount(){
+      this.props.getEvenToday()
+      if (this.state.events.length<=0){
+        this.state.events = this.props.getEvent.data
+      } 
+    }
+    
+    selectTime = (itemValue)=>{
+      this.setState({time: itemValue})
+      if(itemValue == 'upcoming'){
+        this.props.getEvenToday()
+        this.state.events = this.props.getEvent.data
+      }else if(itemValue == 'today'){
+        this.props.getEvenUp()
+        this.state.events = this.props.getEvent.data
+      }
+    }
+ 
+    static navigationOptions = {
+      header: null
+    }
+
+    render(){
+
+      const { data,isLoading} = this.props.getEvent;
+
+      if((isLoading) || (this.state.events.length<=0)){
+        return <Text>Loading</Text>
+      }
+
+      return(
+        <>
+
+        <View style={{height:80,backgroundColor:'white',justifyContent:'center',paddingLeft:30}}>
+          
+        </View>
+
+        <View style={{width:'100%',backgroundColor:'#e3d5d5',height:'100%'}}>
+         
+         <View style={{flexDirection:'row'}}>
+          <TouchableWithoutFeedback>
+              <Card style={{height:150,width:175}} >
+                  
+              </Card>
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback>
+              <Card style={{height:150,width:175}} >
+                  
+              </Card>
+            </TouchableWithoutFeedback>
+          </View>
+
+          <View style={{flexDirection:'row'}}>
+          <TouchableWithoutFeedback>
+              <Card style={{height:150,width:175}} >
+                  
+              </Card>
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback>
+              <Card style={{height:150,width:175}} >
+                  
+              </Card>
+            </TouchableWithoutFeedback>
+            </View>
+
+            <View style={{flexDirection:'row'}}>
+            <TouchableWithoutFeedback>
+              <Card style={{height:150,width:175}} >
+                  
+              </Card>
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback>
+              <Card style={{height:150,width:175}} >
+                  
+              </Card>
+            </TouchableWithoutFeedback>
+          </View>
+        </View>
+        </>
+      )
+    }
 }
 
-const styles = StyleSheet.create({
-  Title: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 20,
-    width:'100%',
-  }
+
+const mapStateToProps = state => ({
+  getEvent:state.getEvent
+
 });
 
-export default Category
+const mapDispatchToProps = dispatch => {
+  return { 
+    getEvenToday:()=>dispatch(getEvenToday()),
+    getEvenUp:()=>dispatch(getEvenUp())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Category)
+
+

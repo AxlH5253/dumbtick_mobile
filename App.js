@@ -5,13 +5,6 @@ import{ createAppContainer } from 'react-navigation';
 import { Container, Icon, Text, Button } from 'native-base';
 import Tabs from './src/screens/tabs';
 
-import {
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 class App extends Component {
   render(){
   return (
