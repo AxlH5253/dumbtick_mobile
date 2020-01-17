@@ -18,8 +18,7 @@ class Home extends Component{
 
 const HomeNavigator = createStackNavigator({
     events: {screen: Events},
-    detailevent: {screen: DetailEvent}
-   
+    detailevent: {screen: DetailEvent},
 });
 
 const HomePage = createAppContainer(HomeNavigator)

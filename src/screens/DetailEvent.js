@@ -23,7 +23,6 @@ class DetailEvent extends Component{
     }
   
     render(){
-        const { navigation } = this.props;
         const { data,isLoading} = this.props.getEventDetail;
         if(isLoading){
             return <Text>Loading</Text>

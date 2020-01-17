@@ -3,7 +3,7 @@ import { StyleSheet,View} from 'react-native';
 import{ createAppContainer } from 'react-navigation';
 import { Icon, Text} from 'native-base';
 import Home from './Home';
-import Category from './Category'
+import CategoryNavigation from './CategoryNavigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import {getEvenToday,getEvenUp} from '../_actions/home'
 import { connect } from 'react-redux';
@@ -40,7 +40,7 @@ const TabNavigator = createBottomTabNavigator(
       })
     },
     Categories: {
-      screen: Category,
+      screen: CategoryNavigation,
       navigationOptions: ({tintColor}) => ({
         tabBarIcon: ({tintColor}) => (
           <Icon name='apps' size={25} style={{color:tintColor}} />
@@ -48,7 +48,7 @@ const TabNavigator = createBottomTabNavigator(
       })
     },
     Search: {
-      screen: Category,
+      screen: CategoryNavigation,
       navigationOptions: () => ({
         tabBarIcon: ({tintColor}) => (
           <Icon name='ios-search' size={25} style={{color:tintColor}} />
